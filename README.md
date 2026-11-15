@@ -152,6 +152,7 @@ git checkout ep01-start     # le projet nu, aucune configuration Claude Code
 | `ep07-start` | + `.claude/agents/` |
 | `ep08-start` | + `.claude/settings.json` et le hook |
 | `ep09-start` | + `.mcp.json` |
+| `ep10-start` | + le plugin `spring-3tiers` (skill et hook déplacés dans `plugins/`) |
 | `serie-complete` | État final |
 
 Pour voir ce qu'une étape ajoute :

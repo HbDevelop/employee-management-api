@@ -1,0 +1,4 @@
+{
+  "referenceDomain": "src/main/java/com/example/employeeapi/employees",
+  "verifyCommand": "docker compose run --rm verify"
+}

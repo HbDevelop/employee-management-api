@@ -1,0 +1,9 @@
+{
+  "name": "spring-3tiers",
+  "version": "0.2.0",
+  "description": "Créer un domaine 3-tiers Spring Boot + MongoDB et normaliser les fichiers édités",
+  "author": {
+    "name": "HbDevelop"
+  },
+  "keywords": ["spring-boot", "java", "mongodb", "3-tiers"]
+}

@@ -1,0 +1,14 @@
+{
+  "name": "employee-management",
+  "description": "Plugins Claude Code du projet Employee Management API",
+  "owner": {
+    "name": "HbDevelop"
+  },
+  "plugins": [
+    {
+      "name": "spring-3tiers",
+      "source": "./plugins/spring-3tiers",
+      "description": "Créer un domaine 3-tiers Spring Boot + MongoDB et normaliser les fichiers édités"
+    }
+  ]
+}

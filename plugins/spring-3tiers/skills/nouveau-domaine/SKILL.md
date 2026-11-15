@@ -1,30 +1,38 @@
 ---
 description: >
   Crée un nouveau domaine métier complet en architecture 3-tiers (document, repository, service,
-  contrôleur, corps de requête et tests), en suivant le modèle du package employees. À utiliser
-  quand l'utilisateur demande d'ajouter une nouvelle entité ou un nouveau domaine à l'API. Passer
-  le nom du domaine au singulier et en minuscules, par exemple "project" ou "invoice".
+  contrôleur, corps de requête et tests), en suivant le modèle du domaine de référence du projet.
+  À utiliser quand l'utilisateur demande d'ajouter une nouvelle entité ou un nouveau domaine à
+  l'API. Passer le nom du domaine au singulier et en minuscules, par exemple "project" ou "invoice".
 argument-hint: [nom-du-domaine-au-singulier]
 ---
 
-Crée le domaine `$0` dans le package `com.example.employeeapi.$0s`, en suivant **exactement** le
-modèle du package `employees`.
+## Configuration du projet
+
+!`cat .claude/spring-3tiers.json 2>/dev/null || echo "CONFIGURATION ABSENTE"`
+
+Si la ligne ci-dessus affiche `CONFIGURATION ABSENTE`, arrête-toi et demande à l'utilisateur de
+créer `.claude/spring-3tiers.json` à partir de l'exemple livré avec le plugin :
+`${CLAUDE_PLUGIN_ROOT}/config/spring-3tiers.example.json`.
+
+Sinon, le **domaine de référence** est le dossier indiqué par `referenceDomain`, et
+`verifyCommand` est la commande qui compile et lance les tests.
+
+## La tâche
+
+Crée le domaine `$0` dans un package `$0s`, voisin du domaine de référence, en suivant
+**exactement** son modèle.
 
 Si `$0` est vide, demande à l'utilisateur le nom du domaine et arrête-toi là.
 
 ## Ce qu'il existe déjà — à lire avant d'écrire
 
-Le domaine de référence, à imiter fichier par fichier :
-
-!`ls -1 src/main/java/com/example/employeeapi/employees/`
-
-Ses tests :
-
-!`ls -1 src/test/java/com/example/employeeapi/employees/`
+Liste le dossier du domaine de référence et lis chacun de ses fichiers, ainsi que ses tests sous
+`src/test/java/` : ce sont les modèles à imiter, fichier par fichier.
 
 ## Fichiers à produire
 
-Dans `src/main/java/com/example/employeeapi/$0s/`, où `Xxx` est `$0` avec une majuscule :
+Dans le package `$0s`, où `Xxx` est `$0` avec une majuscule :
 
 | Fichier | Contenu |
 |---|---|
@@ -34,7 +42,7 @@ Dans `src/main/java/com/example/employeeapi/$0s/`, où `Xxx` est `$0` avec une m
 | `XxxService.java` | La logique métier — **reçoit le repository par son constructeur**, ne connaît pas HTTP |
 | `XxxController.java` | Les routes — reçoit le service et `RequestValidator` par son constructeur |
 
-Dans `src/test/java/com/example/employeeapi/$0s/` :
+Dans le même package, sous `src/test/java/` :
 
 | Fichier | Contenu |
 |---|---|
@@ -57,5 +65,5 @@ Puis, si le domaine doit être protégé, ajoute `"/$0s"` à `JwtAuthFilter.PROT
 
 ## Pour finir
 
-Lance `docker compose run --rm verify` et corrige jusqu'à ce que tous les tests passent. Ne rends
-pas la main sur une suite rouge.
+Lance la commande `verifyCommand` et corrige jusqu'à ce que tous les tests passent. Ne rends pas
+la main sur une suite rouge.
