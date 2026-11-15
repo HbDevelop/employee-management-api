@@ -1,0 +1,14 @@
+target
+# Les tests d'intégration ont besoin de Docker : ils ne tournent pas pendant la construction de l'image
+src/test/java/**/*IT.java
+src/test/java/**/AbstractIntegrationTest.java
+.git
+.gitignore
+.idea
+.vscode
+*.env
+.env.example
+README.md
+Dockerfile
+docker-compose.yml
+.dockerignore

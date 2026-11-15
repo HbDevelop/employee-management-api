@@ -1,0 +1,45 @@
+services:
+  api:
+    build: .
+    image: employee-api-spring:latest
+    # PORT, SALT_ROUNDS, JWT_SECRET, JWT_TTL viennent de ce fichier (non versionné, voir .env.example)
+    env_file: .production.env
+    environment:
+      # Dans Docker, MongoDB est joignable via le nom du service
+      DB_URI: mongodb://mongo:27017/bd_name
+    ports:
+      - "8080:8080"
+    depends_on:
+      mongo:
+        condition: service_healthy
+    restart: unless-stopped
+
+  mongo:
+    image: mongo:7
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  # Tests unitaires + tests d'intégration (Testcontainers), sans installer Java :
+  #   docker compose run --rm integration-tests
+  integration-tests:
+    profiles: ["test"]
+    image: maven:3.9-eclipse-temurin-21
+    working_dir: /app
+    command: mvn -B -ntp verify
+    environment:
+      # Les conteneurs de test sont lancés par le Docker de l'hôte : on les joint via l'hôte
+      TESTCONTAINERS_HOST_OVERRIDE: host.docker.internal
+    volumes:
+      - .:/app
+      - maven-cache:/root/.m2
+      - /var/run/docker.sock:/var/run/docker.sock
+
+volumes:
+  mongo-data:
+  maven-cache:

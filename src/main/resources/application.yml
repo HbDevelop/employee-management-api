@@ -1,0 +1,23 @@
+server:
+  port: ${PORT:8080}
+  # Arrêt propre : sur SIGTERM, le serveur refuse les nouvelles requêtes,
+  # laisse finir celles en cours, puis ferme la connexion MongoDB.
+  shutdown: graceful
+
+spring:
+  application:
+    name: employee-api
+  lifecycle:
+    # Délai maximum accordé aux requêtes en cours avant l'arrêt forcé
+    timeout-per-shutdown-phase: 8s
+  data:
+    mongodb:
+      uri: ${DB_URI:mongodb://127.0.0.1:27017/bd_name}
+      # Crée l'index unique sur users.email au démarrage
+      auto-index-creation: true
+
+app:
+  security:
+    bcrypt-strength: ${SALT_ROUNDS:10}
+    jwt-secret: ${JWT_SECRET:}
+    jwt-ttl: ${JWT_TTL:1d}
