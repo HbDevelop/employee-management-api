@@ -6,6 +6,8 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.Optional;
+
 import com.example.employeeapi.authentication.JwtService;
 import com.example.employeeapi.authentication.RegisterRequest;
 import com.example.employeeapi.core.error.DuplicateFieldException;
@@ -43,13 +45,13 @@ class UserServiceTest {
             return user;
         });
 
-        CreatedUser created = userService.registerUser(REGISTRATION);
+        PublicUser created = userService.registerUser(REGISTRATION);
 
         ArgumentCaptor<User> saved = ArgumentCaptor.forClass(User.class);
         verify(userRepository).save(saved.capture());
         assertThat(saved.getValue().getPassword()).isEqualTo("hashed");
         assertThat(created)
-                .isEqualTo(new CreatedUser("ada@example.com", "Ada", "Lovelace", "66b0c0ffee0000000000abcd"));
+                .isEqualTo(new PublicUser("ada@example.com", "Ada", "Lovelace", "66b0c0ffee0000000000abcd"));
     }
 
     @Test
@@ -62,6 +64,22 @@ class UserServiceTest {
                     assertThat(e.getField()).isEqualTo("email");
                     assertThat(e.getValue()).isEqualTo("ada@example.com");
                 });
+    }
+
+    @Test
+    void getUserReturnsTheUserById() {
+        User user = new User("ada@example.com", "hashed", "Ada", "Lovelace");
+        when(userRepository.findById("66b0c0ffee0000000000abcd")).thenReturn(Optional.of(user));
+
+        assertThat(userService.getUser("66b0c0ffee0000000000abcd")).contains(user);
+    }
+
+    @Test
+    void getUserByEmailReturnsTheUserByEmail() {
+        User user = new User("ada@example.com", "hashed", "Ada", "Lovelace");
+        when(userRepository.findByEmail("ada@example.com")).thenReturn(Optional.of(user));
+
+        assertThat(userService.getUserByEmail("ada@example.com")).contains(user);
     }
 
     @Test

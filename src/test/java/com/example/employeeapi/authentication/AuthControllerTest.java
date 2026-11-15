@@ -15,7 +15,7 @@ import java.util.Optional;
 import com.example.employeeapi.core.error.DuplicateFieldException;
 import com.example.employeeapi.core.error.GlobalExceptionHandler;
 import com.example.employeeapi.core.validation.RequestValidator;
-import com.example.employeeapi.users.CreatedUser;
+import com.example.employeeapi.users.PublicUser;
 import com.example.employeeapi.users.User;
 import com.example.employeeapi.users.UserService;
 import jakarta.validation.Validation;
@@ -71,9 +71,9 @@ class AuthControllerTest {
     }
 
     @Test
-    void registerReturns201WithTheCreatedUser() throws Exception {
+    void registerReturns201WithThePublicUser() throws Exception {
         when(userService.registerUser(any()))
-                .thenReturn(new CreatedUser("ada@example.com", "Ada", "Lovelace", "66b0c0ffee0000000000abcd"));
+                .thenReturn(new PublicUser("ada@example.com", "Ada", "Lovelace", "66b0c0ffee0000000000abcd"));
 
         mockMvc.perform(post("/auth/register").contentType(MediaType.APPLICATION_JSON).content(VALID_REGISTRATION))
                 .andExpect(status().isCreated())

@@ -34,6 +34,8 @@ classe par couche :
 
 - **Injection par constructeur**, jamais de `@Autowired` sur un champ : c'est ce qui permet de
   construire une couche avec des mocks, sans démarrer Spring.
+- Une route protégée se déclare en ajoutant son préfixe à `JwtAuthFilter.PROTECTED_PREFIXES`.
+- Une réponse ne contient jamais l'entité `User` : on renvoie un `PublicUser`, sans mot de passe.
 - Une couche ne parle qu'à la couche immédiatement inférieure. Un contrôleur n'appelle jamais un
   repository.
 - Un corps de requête se valide avec `RequestValidator` (`core/validation/`), pas avec `@Valid` :
@@ -44,8 +46,7 @@ classe par couche :
   `EmployeeServiceTest` pour `EmployeeService`.
 - Tests unitaires avec JUnit 5, Mockito et AssertJ ; contrôleurs testés avec MockMvc en mode
   `standaloneSetup`. Les tests d'intégration (`*IT`) héritent de `AbstractIntegrationTest`.
-- Le domaine `users` est **volontairement incomplet** (pas de contrôleur, donc aucune route). Le
-  modèle à suivre pour le compléter est `employees`.
+- Le domaine de référence est `employees` : tout nouveau domaine l'imite fichier par fichier.
 
 ## Périmètre
 

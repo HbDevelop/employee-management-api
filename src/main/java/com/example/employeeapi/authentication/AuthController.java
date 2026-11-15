@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import com.example.employeeapi.core.validation.RequestValidator;
-import com.example.employeeapi.users.CreatedUser;
+import com.example.employeeapi.users.PublicUser;
 import com.example.employeeapi.users.User;
 import com.example.employeeapi.users.UserService;
 import org.springframework.http.HttpStatus;
@@ -30,11 +30,11 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<CreatedUser> register(@RequestBody(required = false) RegisterRequest body) {
+    public ResponseEntity<PublicUser> register(@RequestBody(required = false) RegisterRequest body) {
         RegisterRequest request = body != null ? body : RegisterRequest.empty();
         requestValidator.validate(request);
 
-        CreatedUser createdUser = userService.registerUser(request);
+        PublicUser createdUser = userService.registerUser(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
 

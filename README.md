@@ -7,6 +7,7 @@ Une petite API REST écrite en **Java avec Spring Boot**. Elle permet de créer 
 - **Créer un compte** avec un email et un mot de passe. Le mot de passe n'est jamais enregistré en clair : seule une empreinte impossible à inverser est gardée.
 - **Se connecter** pour recevoir un jeton (un « token » JWT). Ce jeton prouve qui vous êtes pendant 1 jour.
 - **Gérer des employés** : en ajouter, les lister, les filtrer par département, en lire un, en supprimer un.
+- **Consulter les utilisateurs** : voir son propre compte ou celui d'un autre, sans jamais afficher le mot de passe.
 - **Protéger les employés** : il faut être connecté pour y accéder, et seul celui qui a créé un employé peut le supprimer.
 
 ## Ce qu'il faut installer
@@ -58,6 +59,8 @@ L'API répond sur `http://localhost:8080`. Elle reçoit et renvoie du JSON.
 | `GET` | `/employees/{id}` | Renvoie un employé | Oui |
 | `POST` | `/employees` | Crée un employé | Oui |
 | `DELETE` | `/employees/{id}` | Supprime un employé (créateur seulement) | Oui |
+| `GET` | `/users/me` | Renvoie l'utilisateur connecté | Oui |
+| `GET` | `/users/{id}` | Renvoie un utilisateur, sans son mot de passe | Oui |
 
 ### Exemple complet
 
@@ -107,7 +110,7 @@ curl http://localhost:8080/employees -H "Authorization: Bearer VOTRE_JETON"
 
 ## Tester avec Postman
 
-Le dossier `postman` contient une collection prête à l'emploi, avec 29 requêtes qui couvrent tous les cas (réussites et erreurs).
+Le dossier `postman` contient une collection prête à l'emploi, avec 34 requêtes qui couvrent tous les cas (réussites et erreurs).
 
 1. Dans Postman, cliquez sur **Import** et choisissez `postman/employee-api.postman_collection.json`.
 2. Cliquez sur **Run collection** pour lancer toutes les requêtes dans l'ordre.
@@ -122,8 +125,8 @@ docker compose run --rm integration-tests
 
 Cette commande lance deux sortes de tests :
 
-- **30 tests unitaires**, qui vérifient chaque partie du code séparément. Ils sont aussi lancés à chaque construction de l'application.
-- **17 tests d'intégration**, qui démarrent l'application complète avec une vraie base MongoDB temporaire. Ils ne touchent pas à vos données.
+- **37 tests unitaires**, qui vérifient chaque partie du code séparément. Ils sont aussi lancés à chaque construction de l'application.
+- **21 tests d'intégration**, qui démarrent l'application complète avec une vraie base MongoDB temporaire. Ils ne touchent pas à vos données.
 
 Pour une vérification rapide après une modification (compilation et tests unitaires seulement, sans base de données) :
 
@@ -157,7 +160,7 @@ Pour voir ce qu'une étape ajoute :
 git diff ep06-start ep07-start
 ```
 
-Au départ, le domaine `users` est volontairement incomplet (pas de contrôleur, donc pas de route) alors que `employees` est complet. Le compléter en imitant `employees` est l'exercice de l'étape `ep04-start`.
+À l'étape `ep01-start`, le domaine `users` est volontairement incomplet (pas de contrôleur, donc pas de route) alors que `employees` est complet. Le compléter en imitant `employees` est l'exercice de l'étape `ep04-start` ; le résultat est le tag `ep05-start`.
 
 ## La configuration
 

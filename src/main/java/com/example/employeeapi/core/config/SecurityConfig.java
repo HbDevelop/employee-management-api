@@ -32,12 +32,16 @@ public class SecurityConfig {
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .logout(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                // Seules les routes des employés demandent d'être connecté
+                // Seules les routes protégées demandent d'être connecté
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/employees/**").authenticated()
+                        .requestMatchers(protectedRoutes()).authenticated()
                         .anyRequest().permitAll())
                 .addFilterBefore(new JwtAuthFilter(jwtService, objectMapper),
                         UsernamePasswordAuthenticationFilter.class);
         return http.build();
+    }
+
+    private static String[] protectedRoutes() {
+        return JwtAuthFilter.PROTECTED_PREFIXES.stream().map(prefix -> prefix + "/**").toArray(String[]::new);
     }
 }

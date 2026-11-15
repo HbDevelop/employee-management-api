@@ -23,7 +23,7 @@ public class UserService {
         this.jwtService = jwtService;
     }
 
-    public CreatedUser registerUser(RegisterRequest request) {
+    public PublicUser registerUser(RegisterRequest request) {
         User user = new User(
                 request.email(),
                 passwordEncoder.encode(request.password()),
@@ -31,11 +31,15 @@ public class UserService {
                 request.lastName());
         try {
             User saved = userRepository.save(user);
-            return new CreatedUser(saved.getEmail(), saved.getFirstName(), saved.getLastName(), saved.getId());
+            return PublicUser.from(saved);
         } catch (DuplicateKeyException e) {
             // L'email est déjà pris
             throw new DuplicateFieldException("email", request.email(), e);
         }
+    }
+
+    public Optional<User> getUser(String userId) {
+        return userRepository.findById(userId);
     }
 
     public Optional<User> getUserByEmail(String email) {

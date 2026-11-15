@@ -18,8 +18,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-/** Bloque l'accès à /employees sans jeton valide dans l'en-tête "Authorization: Bearer ...". */
+/** Bloque l'accès aux routes protégées sans jeton valide dans l'en-tête "Authorization: Bearer ...". */
 public class JwtAuthFilter extends OncePerRequestFilter {
+
+    /** Les routes qui demandent d'être connecté. Ajouter ici le préfixe de tout nouveau domaine protégé. */
+    public static final List<String> PROTECTED_PREFIXES = List.of("/employees", "/users");
 
     private static final Pattern BEARER_PATTERN = Pattern.compile("^bearer\\s+(\\S+).*", Pattern.CASE_INSENSITIVE);
 
@@ -34,7 +37,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getServletPath();
-        return !(path.equals("/employees") || path.startsWith("/employees/"));
+        return PROTECTED_PREFIXES.stream()
+                .noneMatch(prefix -> path.equals(prefix) || path.startsWith(prefix + "/"));
     }
 
     @Override
