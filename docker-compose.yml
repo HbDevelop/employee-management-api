@@ -25,6 +25,16 @@ services:
       retries: 10
     restart: unless-stopped
 
+  # Vérification rapide (compilation + tests unitaires, sans base) : docker compose run --rm verify
+  verify:
+    profiles: ["test"]
+    image: maven:3.9-eclipse-temurin-21
+    working_dir: /app
+    command: mvn -B -ntp test
+    volumes:
+      - .:/app
+      - maven-cache:/root/.m2
+
   # Lance tous les tests : docker compose run --rm integration-tests
   integration-tests:
     profiles: ["test"]

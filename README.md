@@ -125,6 +125,40 @@ Cette commande lance deux sortes de tests :
 - **30 tests unitaires**, qui vérifient chaque partie du code séparément. Ils sont aussi lancés à chaque construction de l'application.
 - **17 tests d'intégration**, qui démarrent l'application complète avec une vraie base MongoDB temporaire. Ils ne touchent pas à vos données.
 
+Pour une vérification rapide après une modification (compilation et tests unitaires seulement, sans base de données) :
+
+```bash
+docker compose run --rm verify
+```
+
+## Parcourir le projet étape par étape
+
+Le dépôt sert aussi de terrain d'entraînement pour **Claude Code**. Un tag marque chaque étape : le projet nu d'abord, puis la configuration Claude Code ajoutée brique par brique.
+
+```bash
+git checkout ep01-start     # le projet nu, aucune configuration Claude Code
+```
+
+| Tag | État du dépôt |
+|---|---|
+| `ep01-start` | Projet nu, **aucun `.claude/`** |
+| `ep02-start` | + `CLAUDE.md` |
+| `ep04-start` | + `.claude/rules/` |
+| `ep05-start` | + le domaine `users` complété |
+| `ep06-start` | + `.claude/skills/` |
+| `ep07-start` | + `.claude/agents/` |
+| `ep08-start` | + `.claude/settings.json` et le hook |
+| `ep09-start` | + `.mcp.json` |
+| `serie-complete` | État final |
+
+Pour voir ce qu'une étape ajoute :
+
+```bash
+git diff ep06-start ep07-start
+```
+
+Au départ, le domaine `users` est volontairement incomplet (pas de contrôleur, donc pas de route) alors que `employees` est complet. Le compléter en imitant `employees` est l'exercice de l'étape `ep04-start`.
+
 ## La configuration
 
 Les réglages se trouvent dans `.production.env` :
