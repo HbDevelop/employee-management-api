@@ -5,7 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 
-// L'authentification passe par nos propres JWT : pas d'utilisateur par défaut généré par Spring Security.
+/** Point d'entrée de l'application. */
+// On exclut l'utilisateur par défaut de Spring Security : la connexion se fait par jeton JWT.
 @SpringBootApplication(exclude = UserDetailsServiceAutoConfiguration.class)
 @ConfigurationPropertiesScan
 public class EmployeeApiApplication {

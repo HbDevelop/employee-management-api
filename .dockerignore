@@ -1,5 +1,5 @@
 target
-# Les tests d'intégration ont besoin de Docker : ils ne tournent pas pendant la construction de l'image
+# Les tests d'intégration ne tournent pas pendant la construction de l'image
 src/test/java/**/*IT.java
 src/test/java/**/AbstractIntegrationTest.java
 .git

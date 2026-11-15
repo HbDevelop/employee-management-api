@@ -2,6 +2,7 @@ package com.example.employeeapi.core.error;
 
 import java.util.List;
 
+/** Levée quand les données envoyées par le client sont incorrectes. */
 public class ValidationFailedException extends RuntimeException {
 
     private final transient List<FieldError> errors;

@@ -6,6 +6,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+/** Un compte utilisateur, tel qu'enregistré en base. */
 @Document(collection = "users")
 public class User {
 
@@ -15,7 +16,7 @@ public class User {
     @Indexed(unique = true, name = "email_1")
     private String email;
 
-    /** Hash bcrypt, jamais le mot de passe en clair. */
+    /** Empreinte du mot de passe, jamais le mot de passe lui-même. */
     private String password;
 
     private String firstName;

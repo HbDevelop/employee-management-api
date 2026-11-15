@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+/** Règles de sécurité : quelles routes sont protégées, et comment. */
 @Configuration
 public class SecurityConfig {
 
@@ -25,12 +26,13 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtService jwtService, ObjectMapper objectMapper)
             throws Exception {
         http
-                // API sans session ni cookie : pas de CSRF, pas de formulaire de login
+                // Pas de session ni de formulaire de connexion : chaque requête porte son jeton
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .logout(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                // Seules les routes des employés demandent d'être connecté
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/employees/**").authenticated()
                         .anyRequest().permitAll())

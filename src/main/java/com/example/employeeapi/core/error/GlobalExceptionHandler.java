@@ -11,11 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-/**
- * Équivalent du error.middleware.ts Express.
- * Hérite de ResponseEntityExceptionHandler pour que les erreurs HTTP standard
- * (404, 405, JSON illisible...) gardent leur code habituel.
- */
+/** Transforme les erreurs de l'application en réponses HTTP claires. */
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
@@ -33,6 +29,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .body(List.of(Map.of("field", ex.getField(), "errors", List.of(message))));
     }
 
+    /** Toute erreur imprévue : on la note dans les logs et on répond 500. */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleUnexpected(Exception ex) {
         log.error("Unexpected error", ex);

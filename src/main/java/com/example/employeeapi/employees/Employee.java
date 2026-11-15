@@ -7,6 +7,7 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+/** Un employé, tel qu'enregistré en base. */
 @Document(collection = "employees")
 public class Employee {
 
@@ -22,7 +23,7 @@ public class Employee {
     /** "J" (junior), "M" (medior) ou "S" (senior). */
     private String level;
 
-    /** Identifiant de l'utilisateur qui a créé l'employé (référence vers users). */
+    /** Identifiant de l'utilisateur qui a créé l'employé. */
     @JsonSerialize(using = ToStringSerializer.class)
     private ObjectId createdBy;
 

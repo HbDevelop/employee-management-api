@@ -14,7 +14,7 @@
     <artifactId>employee-api</artifactId>
     <version>1.0.0</version>
     <name>employee-api</name>
-    <description>REST API (employees + JWT authentication) - Spring Boot port of the Express demo app</description>
+    <description>REST API with JWT authentication and employee management (Spring Boot, MongoDB)</description>
 
     <properties>
         <java.version>21</java.version>
@@ -62,7 +62,7 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <!-- Tests d'intégration : démarre un vrai MongoDB dans un conteneur jetable -->
+        <!-- Lance un vrai MongoDB temporaire pour les tests d'intégration -->
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>mongodb</artifactId>
@@ -77,7 +77,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-            <!-- Exécute les classes *IT.java pendant `mvn verify` (pas pendant `mvn package`) -->
+            <!-- Lance les tests d'intégration (classes *IT) avec `mvn verify` -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>

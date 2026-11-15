@@ -13,10 +13,7 @@ import jakarta.validation.Validator;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.stereotype.Component;
 
-/**
- * Valide un corps de requête (record annoté avec Bean Validation) et lève une
- * ValidationFailedException contenant une erreur par champ, dans l'ordre de déclaration des champs.
- */
+/** Vérifie les données envoyées par le client et signale une erreur par champ incorrect. */
 @Component
 public class RequestValidator {
 
@@ -42,7 +39,7 @@ public class RequestValidator {
         throw new ValidationFailedException(errors);
     }
 
-    /** Un champ absent est signalé comme "requis" plutôt que comme "invalide". */
+    /** Si un champ a plusieurs erreurs, on garde "requis" plutôt que "invalide". */
     private static <T> ConstraintViolation<T> mostImportant(ConstraintViolation<T> a, ConstraintViolation<T> b) {
         if (isRequiredViolation(a)) {
             return a;

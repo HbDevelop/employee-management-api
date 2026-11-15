@@ -4,6 +4,7 @@ import com.example.employeeapi.core.validation.Patterns;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
+/** Données attendues pour se connecter. */
 public record LoginRequest(
         @NotBlank(message = "The user email is required")
         @Pattern(regexp = Patterns.EMAIL, message = "Invalid email address")

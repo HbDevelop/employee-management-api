@@ -1,6 +1,6 @@
 package com.example.employeeapi.core.error;
 
-/** Violation d'une contrainte d'unicité (ex. email déjà utilisé). */
+/** Levée quand une valeur qui doit être unique existe déjà (ex. email déjà utilisé). */
 public class DuplicateFieldException extends RuntimeException {
 
     private final String field;

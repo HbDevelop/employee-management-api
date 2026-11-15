@@ -3,6 +3,7 @@ package com.example.employeeapi.employees;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
+/** Données attendues pour créer un employé. */
 public record CreateEmployeeRequest(
         @NotBlank(message = "The employee department is required")
         @Pattern(regexp = "IT|Marketing|HR",

@@ -18,10 +18,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-/**
- * Équivalent du auth.middleware.ts Express : protège /employees avec un JWT
- * transmis dans l'en-tête "Authorization: Bearer &lt;token&gt;".
- */
+/** Bloque l'accès à /employees sans jeton valide dans l'en-tête "Authorization: Bearer ...". */
 public class JwtAuthFilter extends OncePerRequestFilter {
 
     private static final Pattern BEARER_PATTERN = Pattern.compile("^bearer\\s+(\\S+).*", Pattern.CASE_INSENSITIVE);

@@ -14,7 +14,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Service;
 
-/** Génération et vérification des JWT (HS256), même contenu que la version Express. */
+/** Crée et vérifie les jetons de connexion (JWT). */
 @Service
 public class JwtService {
 
@@ -35,6 +35,7 @@ public class JwtService {
         this.ttl = properties.jwtTtl();
     }
 
+    /** Crée un jeton qui contient l'identité de l'utilisateur et une date d'expiration. */
     public String generateToken(User user) {
         Instant now = Instant.now();
         return Jwts.builder()
@@ -48,10 +49,7 @@ public class JwtService {
                 .compact();
     }
 
-    /**
-     * @throws io.jsonwebtoken.ExpiredJwtException si le token a expiré
-     * @throws io.jsonwebtoken.JwtException        si le token est invalide (signature, format...)
-     */
+    /** Vérifie un jeton et renvoie son utilisateur. Lève une exception s'il est faux ou expiré. */
     public AuthUser verifyToken(String token) {
         Claims claims = Jwts.parser().verifyWith(key).build().parseSignedClaims(token).getPayload();
         return new AuthUser(

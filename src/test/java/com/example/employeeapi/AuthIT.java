@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-/** Équivalent de test/register.test.ts et test/login.test.ts. */
+/** Teste l'inscription et la connexion de bout en bout. */
 class AuthIT extends AbstractIntegrationTest {
 
     private static final String EMAIL = "ada@example.com";

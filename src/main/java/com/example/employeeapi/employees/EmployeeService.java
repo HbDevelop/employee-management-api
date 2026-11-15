@@ -7,6 +7,7 @@ import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+/** Règles métier des employés. */
 @Service
 public class EmployeeService {
 

@@ -9,6 +9,7 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+/** Règles métier des comptes : inscription, mot de passe, jeton. */
 @Service
 public class UserService {
 
@@ -32,7 +33,7 @@ public class UserService {
             User saved = userRepository.save(user);
             return new CreatedUser(saved.getEmail(), saved.getFirstName(), saved.getLastName(), saved.getId());
         } catch (DuplicateKeyException e) {
-            // Index unique sur users.email
+            // L'email est déjà pris
             throw new DuplicateFieldException("email", request.email(), e);
         }
     }

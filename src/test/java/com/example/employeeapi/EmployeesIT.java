@@ -15,7 +15,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-/** Équivalent de test/access-protected-ressource.test.ts, étendu au CRUD des employés. */
+/** Teste l'accès protégé et la gestion des employés de bout en bout. */
 class EmployeesIT extends AbstractIntegrationTest {
 
     private static final Map<String, String> ADA = Map.of("department", "IT", "name", "Ada", "level", "S");
@@ -49,7 +49,7 @@ class EmployeesIT extends AbstractIntegrationTest {
 
     @Test
     void returns401WhenTheTokenIsExpired() {
-        // Token signé avec le bon secret, mais déjà expiré
+        // Jeton correctement signé, mais déjà expiré
         User user = new User("ada@example.com", "hashed", "Ada", "Lovelace");
         user.setId(new ObjectId().toHexString());
         String expiredToken = new JwtService(new AppProperties(4, JWT_SECRET, Duration.ofMinutes(-5)))

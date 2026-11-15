@@ -18,15 +18,11 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.MongoDBContainer;
 
-/**
- * Base des tests d'intégration : l'application complète est démarrée sur un port aléatoire,
- * branchée sur un vrai MongoDB lancé dans un conteneur jetable (Testcontainers).
- * Nécessite Docker. Lancés par `mvn verify` (classes *IT).
- */
+/** Base des tests d'intégration : démarre l'application complète avec un vrai MongoDB temporaire. */
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, properties = {
         "app.security.jwt-secret=" + AbstractIntegrationTest.JWT_SECRET,
         "app.security.jwt-ttl=1d",
-        // Coût bcrypt minimal pour des tests rapides
+        // Protection des mots de passe au minimum, pour des tests rapides
         "app.security.bcrypt-strength=4"
 })
 public abstract class AbstractIntegrationTest {
@@ -34,7 +30,7 @@ public abstract class AbstractIntegrationTest {
     protected static final String JWT_SECRET = "integration-test-secret-integration-test-0123456789";
     protected static final String PASSWORD = "Passw0rd!";
 
-    // Un seul conteneur MongoDB partagé par toutes les classes de test (arrêté à la fin de la JVM)
+    // Un seul MongoDB temporaire, partagé par tous les tests
     private static final MongoDBContainer MONGO = new MongoDBContainer("mongo:7");
 
     static {
@@ -68,7 +64,7 @@ public abstract class AbstractIntegrationTest {
         return (String) rest.postForObject("/auth/register", registration(email), Map.class).get("_id");
     }
 
-    /** Crée un compte, se connecte, et renvoie le JWT. */
+    /** Crée un compte, se connecte, et renvoie le jeton. */
     protected String registerAndLogin(String email) {
         register(email);
         Map<?, ?> body = rest.postForObject("/auth/login", Map.of("email", email, "password", PASSWORD), Map.class);

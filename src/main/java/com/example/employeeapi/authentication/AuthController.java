@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/** Routes d'inscription et de connexion. */
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -44,7 +45,7 @@ public class AuthController {
 
         Optional<User> user = userService.getUserByEmail(request.email());
         if (user.isEmpty() || !userService.checkPassword(request.password(), user.get().getPassword())) {
-            // Même réponse pour un email inconnu et un mauvais mot de passe
+            // Même réponse dans les deux cas, pour ne pas révéler si l'email existe
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(INVALID_CREDENTIALS);
         }
 

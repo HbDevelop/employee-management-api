@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-/** Toutes ces routes exigent un JWT valide (voir JwtAuthFilter). */
+/** Routes des employés. Toutes demandent d'être connecté. */
 @RestController
 @RequestMapping("/employees")
 public class EmployeeController {
@@ -32,7 +32,7 @@ public class EmployeeController {
         this.requestValidator = requestValidator;
     }
 
-    // GET /employees?department=IT
+    /** Liste les employés, avec un filtre optionnel : /employees?department=IT */
     @GetMapping
     public List<Employee> getAllEmployees(@RequestParam(required = false) String department) {
         return employeeService.getEmployees(department);
@@ -56,6 +56,7 @@ public class EmployeeController {
         if (employee.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
+        // Seul le créateur de l'employé peut le supprimer
         ObjectId createdBy = employee.get().getCreatedBy();
         if (createdBy == null || !createdBy.toHexString().equals(connectedUser.id())) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
