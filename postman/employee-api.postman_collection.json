@@ -1,8 +1,8 @@
 {
   "info": {
     "_postman_id": "9b5ef291-b93b-425a-8c51-70979316bbdc",
-    "name": "Employee API (Express / Spring Boot)",
-    "description": "Scénarios de test de l'API : inscription, connexion, accès protégé par JWT et gestion des employés.\n\n**À lancer dans l'ordre** (Run collection) : les requêtes enregistrent le token et les identifiants dans les variables de la collection pour les suivantes.\n\nVariable `baseUrl` : `http://localhost:8080` (version Spring Boot) ou `http://localhost:5000` (version Express).\n\nChaque exécution crée deux comptes de test (`test.user.<horodatage>@example.com`) qui restent en base.",
+    "name": "Employee Management API",
+    "description": "Scénarios de test de l'API : inscription, connexion, accès protégé par JWT et gestion des employés.\n\n**À lancer dans l'ordre** (Run collection) : les requêtes enregistrent le token et les identifiants dans les variables de la collection pour les suivantes.\n\nVariable `baseUrl` : adresse de l’API, `http://localhost:8080` par défaut.\n\nChaque exécution crée deux comptes de test (`test.user.<horodatage>@example.com`) qui restent en base.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [

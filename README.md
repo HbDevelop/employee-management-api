@@ -2,8 +2,6 @@
 
 Une petite API REST écrite en **Java avec Spring Boot**. Elle permet de créer un compte, de se connecter, puis de gérer une liste d'employés. Les données sont enregistrées dans une base **MongoDB**.
 
-Ce projet est la version Spring Boot d'une API d'abord écrite avec Express (Node.js) : le projet de tutoriel [explore-claude-demo-app](https://github.com/rblmdst/explore-claude-demo-app). Les deux versions ont les mêmes routes et renvoient les mêmes réponses.
-
 ## Ce que fait l'application
 
 - **Créer un compte** avec un email et un mot de passe. Le mot de passe n'est jamais enregistré en clair : seule une empreinte impossible à inverser est gardée.
