@@ -28,27 +28,27 @@ services:
   # Vérification rapide (compilation + tests unitaires, sans base) : docker compose run --rm verify
   verify:
     profiles: ["test"]
-    image: maven:3.9-eclipse-temurin-21
+    image: eclipse-temurin:21-jdk
     working_dir: /app
-    command: mvn -B -ntp test
+    command: ./gradlew test --no-daemon
     volumes:
       - .:/app
-      - maven-cache:/root/.m2
+      - gradle-cache:/root/.gradle
 
   # Lance tous les tests : docker compose run --rm integration-tests
   integration-tests:
     profiles: ["test"]
-    image: maven:3.9-eclipse-temurin-21
+    image: eclipse-temurin:21-jdk
     working_dir: /app
-    command: mvn -B -ntp verify
+    command: ./gradlew test integrationTest --no-daemon
     environment:
       # Permet aux tests de joindre le MongoDB temporaire qu'ils démarrent
       TESTCONTAINERS_HOST_OVERRIDE: host.docker.internal
     volumes:
       - .:/app
-      - maven-cache:/root/.m2
+      - gradle-cache:/root/.gradle
       - /var/run/docker.sock:/var/run/docker.sock
 
 volumes:
   mongo-data:
-  maven-cache:
+  gradle-cache:

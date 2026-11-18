@@ -134,6 +134,17 @@ Pour une vérification rapide après une modification (compilation et tests unit
 docker compose run --rm verify
 ```
 
+### Sans Docker, avec Java installé
+
+Le projet se construit avec **Gradle**. Le script `gradlew` fourni télécharge tout seul la bonne version de Gradle : il suffit d'avoir **Java 21** installé. Sous Windows, utilisez `gradlew.bat` à la place de `./gradlew`.
+
+| Pour… | Commande |
+|---|---|
+| Compiler et lancer les tests unitaires | `./gradlew test` |
+| Lancer les tests d'intégration (Docker requis) | `./gradlew integrationTest` |
+| Construire le fichier exécutable `build/libs/app.jar` | `./gradlew bootJar` |
+| Démarrer l'API (MongoDB et `JWT_SECRET` requis) | `./gradlew bootRun` |
+
 ## Parcourir le projet étape par étape
 
 Le dépôt sert aussi de terrain d'entraînement pour **Claude Code**. Un tag marque chaque étape : le projet nu d'abord, puis la configuration Claude Code ajoutée brique par brique.
@@ -196,6 +207,7 @@ Quand on arrête l'application, elle termine d'abord les requêtes en cours avan
 ## Technologies utilisées
 
 - Java 21 et Spring Boot 3.5 (Web, Security, Data MongoDB, Validation)
+- Gradle 8.14 pour la construction du projet
 - MongoDB 7
 - JWT avec la bibliothèque jjwt
 - JUnit 5, Mockito et Testcontainers pour les tests

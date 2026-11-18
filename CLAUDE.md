@@ -4,7 +4,7 @@ API REST en architecture 3-tiers : inscription, connexion par JWT et gestion des
 
 ## Commandes
 
-Java et Maven ne sont pas installés sur le poste : tout passe par Docker.
+Le build utilise Gradle. Java n'est pas installé sur le poste : tout passe par Docker.
 
 ```bash
 docker compose run --rm verify              # compilation + tests unitaires — LA commande à lancer après toute modification

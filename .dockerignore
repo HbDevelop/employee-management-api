@@ -1,4 +1,5 @@
-target
+build
+.gradle
 # Les tests d'intégration ne tournent pas pendant la construction de l'image
 src/test/java/**/*IT.java
 src/test/java/**/AbstractIntegrationTest.java
